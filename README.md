@@ -21,7 +21,7 @@ Mật khẩu: admin123
 
 ### 1. Cài đặt dependencies
 ```bash
-cd "D:\New folder\ASP.NET\07092025-nguyennhutlam\website bán linh kiện điện tử\linhkiendientu3\ElectroShop"
+cd 
 dotnet restore
 ```
 
@@ -135,11 +135,6 @@ rm electroshop.db
 dotnet run
 ```
 
-### Port đã được sử dụng:
-```bash
-# Thay đổi port khác
-dotnet run --urls "http://localhost:8081"
-```
 
 ## Tính năng sẽ phát triển
 
