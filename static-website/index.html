@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroShop - Static</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-2xl font-bold">ElectroShop</h1>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div id="loading" class="text-center py-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p class="mt-2">Đang tải sản phẩm...</p>
+        </div>
+        
+        <div id="products" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden"></div>
+    </main>
+
+    <script>
+        const API_BASE = 'https://localhost:7000/api';
+        
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_BASE}/ProductsApi`);
+                const products = await response.json();
+                
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('products').classList.remove('hidden');
+                
+                const productsContainer = document.getElementById('products');
+                productsContainer.innerHTML = products.map(product => `
+                    <div class="bg-white rounded-lg shadow-md p-4">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded">
+                        <h3 class="font-bold mt-2">${product.name}</h3>
+                        <p class="text-blue-600 font-semibold">${product.price.toLocaleString('vi-VN')}₫</p>
+                        <button onclick="addToCart('${product.id}')" 
+                                class="w-full bg-blue-600 text-white py-2 rounded mt-2 hover:bg-blue-700">
+                            Thêm vào giỏ
+                        </button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Lỗi tải sản phẩm:', error);
+                document.getElementById('loading').innerHTML = '<p class="text-red-500">Lỗi tải dữ liệu</p>';
+            }
+        }
+        
+        function addToCart(productId) {
+            alert(`Đã thêm sản phẩm ${productId} vào giỏ hàng!`);
+        }
+        
+        loadProducts();
+    </script>
+</body>
+</html>

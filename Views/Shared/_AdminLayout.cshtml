@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ElectroShop Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <div class="bg-gradient-to-b from-gray-800 to-gray-900 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-300 ease-in-out shadow-2xl">
+            <!-- Logo -->
+            <a href="@Url.Action("Index", "Admin")" class="text-white flex items-center space-x-2 px-4">
+                <svg class="h-8 w-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <span class="text-2xl font-extrabold">ElectroShop</span>
+            </a>
+
+            <!-- Navigation -->
+            <nav class="space-y-2">
+                <a href="@Url.Action("Index", "Admin")" 
+                   class="text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                    <svg class="text-gray-300 group-hover:text-white mr-3 h-6 w-6 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h2a2 2 0 012 2v6H8V5z"></path>
+                    </svg>
+                    Dashboard
+                </a>
+
+                <a href="@Url.Action("Products", "Admin")" 
+                   class="text-white hover:bg-gradient-to-r hover:from-green-600 hover:to-teal-600 group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                    <svg class="text-gray-300 group-hover:text-white mr-3 h-6 w-6 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                    </svg>
+                    Sản phẩm
+                </a>
+
+                <a href="@Url.Action("Orders", "Admin")" 
+                   class="text-white hover:bg-gradient-to-r hover:from-orange-600 hover:to-red-600 group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                    <svg class="text-gray-300 group-hover:text-white mr-3 h-6 w-6 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    Đơn hàng
+                </a>
+
+                <a href="@Url.Action("Users", "Admin")" 
+                   class="text-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                    <svg class="text-gray-300 group-hover:text-white mr-3 h-6 w-6 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                    Khách hàng
+                </a>
+            </nav>
+
+            <!-- User Info -->
+            <div class="absolute bottom-0 left-0 right-0 p-4">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center">
+                            <svg class="h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-white">@User.Identity?.Name</p>
+                        <form method="post" action="@Url.Action("Logout", "Account")" class="inline">
+                            <button type="submit" class="text-xs text-gray-300 hover:text-white">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm">
+                <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center">
+                        <h1 class="text-2xl font-bold text-gray-900">@ViewData["Title"]</h1>
+                        <div class="flex items-center space-x-4">
+                            <a href="@Url.Action("Index", "Home")" target="_blank" 
+                               class="text-gray-500 hover:text-gray-700">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <p class="text-sm text-green-700">@TempData["SuccessMessage"]</p>
+                        </div>
+                    }
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <p class="text-sm text-red-700">@TempData["ErrorMessage"]</p>
+                        </div>
+                    }
+
+                    @RenderBody()
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

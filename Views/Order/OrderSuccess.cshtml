@@ -1,0 +1,69 @@
+@model ElectroShop.Models.Order
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-lg shadow-md p-8 text-center">
+            <!-- Success Icon -->
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+                <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">Đặt hàng thành công!</h1>
+            <p class="text-gray-600 mb-8">Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ liên hệ với bạn sớm nhất để xác nhận đơn hàng.</p>
+            
+            <!-- Order Info -->
+            <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-3">Thông tin đơn hàng</h3>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p><strong>Mã đơn hàng:</strong> #@Model.Id.Substring(0, 8)</p>
+                            <p><strong>Ngày đặt:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+                            <p><strong>Tổng tiền:</strong> <span class="font-semibold text-blue-600">@Model.Total.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</span></p>
+                            <p><strong>Phương thức thanh toán:</strong> 
+                                @(Model.PaymentMethod == "cod" ? "Thanh toán khi nhận hàng" :
+                                  Model.PaymentMethod == "bank_transfer" ? "Chuyển khoản ngân hàng" :
+                                  "Ví điện tử")
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-3">Thông tin giao hàng</h3>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p><strong>Người nhận:</strong> @Model.ShippingInfo.Name</p>
+                            <p><strong>Điện thoại:</strong> @Model.ShippingInfo.Phone</p>
+                            <p><strong>Địa chỉ:</strong> @Model.ShippingInfo.Address</p>
+                            <p><strong>Quận/Huyện:</strong> @Model.ShippingInfo.District</p>
+                            <p><strong>Thành phố:</strong> @Model.ShippingInfo.City</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="@Url.Action("Details", new { id = Model.Id })" 
+                   class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
+                    <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Xem chi tiết đơn hàng
+                </a>
+                
+                <a href="@Url.Action("Index", "Products")" 
+                   class="inline-flex items-center px-6 py-3 border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold rounded-lg transition-colors">
+                    <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
+                    </svg>
+                    Tiếp tục mua sắm
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
